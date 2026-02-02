@@ -17,18 +17,20 @@
             overflow: hidden;
         }
 
+        /* Updated Background with your new image */
         .bg-image {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://i.postimg.cc/dQLBtghB/IMG-4167.png');
+            background-image: url('https://i.postimg.cc/zDhr6znx/f3a2018a-fa0d-4cac-a885-78ce659c3b68.jpg');
             background-size: cover;
             background-position: center;
             filter: blur(10px);
             transform: scale(1.1);
             z-index: -1;
+            transition: filter 0.8s ease;
         }
 
         .overlay {
@@ -51,12 +53,15 @@
             width: 90%;
         }
 
+        /* Perfected cropping for the front image */
         .card-img {
             width: 100%;
-            max-width: 280px;
-            height: auto;
+            max-width: 300px;
+            height: 250px; /* Fixed height for a perfect crop */
+            object-fit: cover; /* This crops the image perfectly to fill the box */
             border-radius: 15px;
             margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         h1 { color: #ff4d6d; font-size: 1.8rem; margin: 10px 0; }
@@ -114,11 +119,11 @@
 </head>
 <body>
 
-    <div class="bg-image"></div>
+    <div class="bg-image" id="bgImage"></div>
     <div class="overlay"></div>
 
     <div class="container" id="mainCard">
-        <img src="https://i.postimg.cc/zDhr6znx/f3a2018a-fa0d-4cac-a885-78ce659c3b68.jpg" alt="Us">
+        <img src="https://i.postimg.cc/zDhr6znx/f3a2018a-fa0d-4cac-a885-78ce659c3b68.jpg" class="card-img" alt="Us">
         <h1>Will you be my Valentine?</h1>
         <p>I promise it'll be the best one! ✨</p>
         
@@ -132,11 +137,11 @@
         <h1>YAY! ❤️</h1>
         
         <div class="glass-box">
-            <span style="font-size: 1.2rem; font-weight: bold;">See you on Feb 14th! ❤️</span>
+            <span style="font-size: 1.2rem; font-weight: bold;">Where are we going on the 14th! ❤️</span>
         </div>
 
         <div class="glass-box" id="timerContainer">
-            <p style="margin: 0 0 10px 0; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Time passed since you are mine:</p>
+            <p style="margin: 0 0 10px 0; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Time passed since you texted me back:</p>
             <div id="dateCounter">Calculating...</div>
         </div>
     </div>
@@ -152,14 +157,13 @@
         }
 
         function updateTimer() {
-            const startDate = new Date('2023-04-8T00:19:00'); // Anniversary Date
+            const startDate = new Date('2023-04-08T00:00:00'); 
             const now = new Date();
 
             let years = now.getFullYear() - startDate.getFullYear();
             let months = now.getMonth() - startDate.getMonth();
             let days = now.getDate() - startDate.getDate();
 
-            // Adjust for negative days/months
             if (days < 0) {
                 months--;
                 const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
@@ -189,7 +193,7 @@
         function celebrate() {
             document.getElementById('mainCard').style.display = 'none';
             document.getElementById('successMessage').style.display = 'block';
-            document.querySelector('.bg-image').style.filter = 'none';
+            document.getElementById('bgImage').style.filter = 'none';
             
             setInterval(updateTimer, 1000);
             updateTimer();
